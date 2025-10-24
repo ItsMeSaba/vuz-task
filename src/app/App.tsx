@@ -1,4 +1,8 @@
-import { setData } from "app/store/slices/characters.slice";
+import {
+  setChosenCharacters,
+  setData,
+} from "app/store/slices/characters.slice";
+import { getChosenCharactersLocalStorage } from "shared/utils/chosen-characters-localstorage";
 import { Homepage } from "page/home/ui/Homepage";
 import { Header } from "shared/ui/header/Header";
 import { useAppDispatch } from "app/store/hooks";
@@ -11,6 +15,7 @@ function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    dispatch(setChosenCharacters(getChosenCharactersLocalStorage()));
     dispatch(setData(Characters as Character[]));
   }, []);
 

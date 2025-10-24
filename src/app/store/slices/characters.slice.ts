@@ -53,6 +53,9 @@ const characters = createSlice({
         state.chosenCharacters.push(id);
       }
     },
+    setChosenCharacters: (state, action: PayloadAction<number[]>) => {
+      state.chosenCharacters = action.payload;
+    },
     clearChosen: (state) => {
       state.chosenCharacters = [];
     },
@@ -67,6 +70,7 @@ export const {
   setFilters,
   clearFilters,
   toggleChosenCharacter,
+  setChosenCharacters,
   clearChosen,
 } = characters.actions;
 

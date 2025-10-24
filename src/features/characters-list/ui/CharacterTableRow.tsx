@@ -2,6 +2,7 @@ import {
   toggleChosenCharacter,
   toggleFilter,
 } from "app/store/slices/characters.slice";
+import { toggleChosenCharacterLocalStorage } from "shared/utils/chosen-characters-localstorage";
 import { capitalizeFirstLetter } from "shared/utils/capitilize-first-letter";
 import { useAppDispatch, useAppSelector } from "app/store/hooks";
 import { getAbilityScores } from "../helpers/get-ability-scores";
@@ -28,13 +29,18 @@ export function CharacterTableRow({ character }: Props) {
   const { Energy, Mobility, Power, Technique, Survivability } =
     getAbilityScores(character);
 
+  const handleCheckboxChange = () => {
+    dispatch(toggleChosenCharacter(character.id));
+    toggleChosenCharacterLocalStorage(character.id);
+  };
+
   return (
     <tr className={`${styles.tableRow} ${isSelected ? styles.selected : ""}`}>
       <td className={styles.characterCell}>
         <div className={styles.characterContent}>
           <Checkbox
             checked={isSelected}
-            onChange={() => dispatch(toggleChosenCharacter(character.id))}
+            onChange={handleCheckboxChange}
             disabled={chosenCharacters.length >= 6 && !isSelected}
           />
 

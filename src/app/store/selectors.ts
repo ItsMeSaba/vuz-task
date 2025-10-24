@@ -1,9 +1,12 @@
+import { MY_TEAM_FILTER } from "features/filters/ui/Filters";
 import type { Character } from "@/shared/types/global";
 import { createSelector } from "@reduxjs/toolkit";
 import type { RootState } from "@/app/store";
 
-const selectQuery = (s: RootState) => s.characters.query.trim().toLowerCase();
-const selectFilters = (s: RootState) => s.characters.filters;
+export const selectQuery = (s: RootState) =>
+  s.characters.query.trim().toLowerCase();
+export const selectCharacters = (s: RootState) => s.characters.data;
+export const selectFilters = (s: RootState) => s.characters.filters;
 
 export const selectChosenCharacters = (s: RootState) => {
   const characters = s.characters.data;
@@ -13,8 +16,6 @@ export const selectChosenCharacters = (s: RootState) => {
     chosenCharactersIds.includes(character.id)
   );
 };
-
-export const selectCharacters = (s: RootState) => s.characters.data;
 
 export const selectFilteredCharacters = createSelector(
   [selectCharacters, selectQuery, selectFilters, selectChosenCharacters],
@@ -52,7 +53,7 @@ function matchesFilters(
   if (!filters.length) return true;
 
   const matchesTeamFilter =
-    filters.includes("My Team") && chosenCharacters.includes(character.id);
+    filters.includes(MY_TEAM_FILTER) && chosenCharacters.includes(character.id);
 
   const matchesTagsFilter = filters.every((filter) =>
     character?.tags?.some((tag) => filter === tag.tag_name)

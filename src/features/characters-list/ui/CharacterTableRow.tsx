@@ -9,10 +9,9 @@ import { PillButton } from "shared/ui/pill-button/PillButton";
 import { selectChosenCharacters } from "app/store/selectors";
 import { Checkbox } from "shared/ui/checkbox/Checkbox";
 import { Character } from "shared/types/global";
-
 import styles from "./styles.module.scss";
 
-interface CharacterTableRowProps {
+interface Props {
   character: Character;
 }
 
@@ -20,7 +19,7 @@ const getScoreClassName = (score: number): string => {
   return score === 10 ? styles.highScore : "";
 };
 
-export function CharacterTableRow({ character }: CharacterTableRowProps) {
+export function CharacterTableRow({ character }: Props) {
   const chosenCharacters = useAppSelector(selectChosenCharacters);
 
   const isSelected = chosenCharacters.includes(character);

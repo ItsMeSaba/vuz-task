@@ -14,9 +14,17 @@ export function CharactersTable({ characters }: CharactersTableProps) {
         <CharacterTableHeader />
 
         <tbody>
-          {characters.map((character) => (
+          {characters?.map((character) => (
             <CharacterTableRow key={character.id} character={character} />
           ))}
+
+          {!characters?.length && (
+            <tr>
+              <td colSpan={7} className={styles.noCharactersFound}>
+                No characters found
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

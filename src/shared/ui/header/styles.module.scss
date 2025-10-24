@@ -1,0 +1,12 @@
+.header {
+  height: 76px;
+  display: flex;
+  margin-bottom: 90px;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+
+  .logo {
+    transform: translateY(50%);
+  }
+}

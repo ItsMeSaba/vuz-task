@@ -1,3 +1,4 @@
+import { toggleChosenCharacterLocalStorage } from "shared/utils/chosen-characters-localstorage";
 import { calculateAverageStats } from "../helpers/calculate-average-stats";
 import { toggleChosenCharacter } from "app/store/slices/characters.slice";
 import { useAppDispatch, useAppSelector } from "app/store/hooks";
@@ -16,6 +17,12 @@ export function ChosenCharacters() {
     return null;
   }
 
+  const handleCheckboxChange = (characterId: number) => {
+    dispatch(toggleChosenCharacter(characterId));
+
+    toggleChosenCharacterLocalStorage(characterId);
+  };
+
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Your champions!</h2>
@@ -25,7 +32,7 @@ export function ChosenCharacters() {
           <CharacterAvatar
             key={character.id}
             character={character}
-            onRemove={() => dispatch(toggleChosenCharacter(character.id))}
+            onRemove={() => handleCheckboxChange(character.id)}
           />
         ))}
       </div>

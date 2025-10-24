@@ -5,8 +5,14 @@ import type { RootState } from "@/app/store";
 const selectQuery = (s: RootState) => s.characters.query.trim().toLowerCase();
 const selectFilters = (s: RootState) => s.characters.filters;
 
-export const selectChosenCharacters = (s: RootState) =>
-  s.characters.chosenCharacters;
+export const selectChosenCharacters = (s: RootState) => {
+  const characters = s.characters.data;
+  const chosenCharactersIds = s.characters.chosenCharacters;
+
+  return characters.filter((character) =>
+    chosenCharactersIds.includes(character.id)
+  );
+};
 
 export const selectCharacters = (s: RootState) => s.characters.data;
 
@@ -16,7 +22,11 @@ export const selectFilteredCharacters = createSelector(
     return characters.filter(
       (character) =>
         matchesQuery(query, character) &&
-        matchesFilters(filters, character, chosenCharacters)
+        matchesFilters(
+          filters,
+          character,
+          chosenCharacters.map((c) => c.id)
+        )
     );
   }
 );
@@ -37,15 +47,12 @@ function matchesQuery(query: string, character: Character) {
 function matchesFilters(
   filters: string[],
   character: Character,
-  chosenCharacters: Character[]
+  chosenCharacters: number[]
 ) {
   if (!filters.length) return true;
 
   const matchesTeamFilter =
-    filters.includes("My Team") &&
-    chosenCharacters.some(
-      (chosenCharacter) => character.id === chosenCharacter.id
-    );
+    filters.includes("My Team") && chosenCharacters.includes(character.id);
 
   const matchesTagsFilter = filters.every((filter) =>
     character?.tags?.some((tag) => filter === tag.tag_name)

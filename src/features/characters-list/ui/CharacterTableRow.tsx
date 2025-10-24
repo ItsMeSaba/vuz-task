@@ -6,8 +6,9 @@ import { capitalizeFirstLetter } from "shared/utils/capitilize-first-letter";
 import { useAppDispatch, useAppSelector } from "app/store/hooks";
 import { getAbilityScores } from "../helpers/get-ability-scores";
 import { PillButton } from "shared/ui/pill-button/PillButton";
+import { selectChosenCharacters } from "app/store/selectors";
 import { Checkbox } from "shared/ui/checkbox/Checkbox";
-import { Character } from "@/shared/types/global";
+import { Character } from "shared/types/global";
 
 import styles from "./styles.module.scss";
 
@@ -20,9 +21,7 @@ const getScoreClassName = (score: number): string => {
 };
 
 export function CharacterTableRow({ character }: CharacterTableRowProps) {
-  const chosenCharacters = useAppSelector(
-    (state) => state.characters.chosenCharacters
-  );
+  const chosenCharacters = useAppSelector(selectChosenCharacters);
 
   const isSelected = chosenCharacters.includes(character);
   const dispatch = useAppDispatch();
@@ -36,7 +35,7 @@ export function CharacterTableRow({ character }: CharacterTableRowProps) {
         <div className={styles.characterContent}>
           <Checkbox
             checked={isSelected}
-            onChange={() => dispatch(toggleChosenCharacter(character))}
+            onChange={() => dispatch(toggleChosenCharacter(character.id))}
             disabled={chosenCharacters.length >= 6 && !isSelected}
           />
 

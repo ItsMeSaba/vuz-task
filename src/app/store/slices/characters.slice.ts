@@ -1,13 +1,21 @@
-import { Character } from "@/shared/types/global";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { toggleInArray } from "shared/utils/toggle-in-array";
+import { Character } from "shared/types/global";
 
-import charactersJson from "shared/data/characters.json";
+type CharactersState = {
+  data: Character[];
+  query: string;
+  filters: string[];
+  chosenCharacters: number[];
+};
 
-const initialState = {
-  data: charactersJson as Character[],
+const MAX_CHOSEN = 6;
+
+const initialState: CharactersState = {
+  data: [],
   query: "",
-  filters: [] as string[],
-  chosenCharacters: [] as Character[],
+  filters: [],
+  chosenCharacters: [],
 };
 
 const characters = createSlice({
@@ -17,41 +25,49 @@ const characters = createSlice({
     setData: (state, action: PayloadAction<Character[]>) => {
       state.data = action.payload;
     },
+
     setQuery: (state, action: PayloadAction<string>) => {
       state.query = action.payload;
-    },
-    toggleFilter: (state, action: PayloadAction<string>) => {
-      const index = state.filters.indexOf(action.payload);
-      index === -1
-        ? state.filters.push(action.payload)
-        : state.filters.splice(index, 1);
-    },
-    clearFilters: (state) => {
-      state.filters = [];
     },
     clearQuery: (state) => {
       state.query = "";
     },
-    toggleChosenCharacter: (state, action: PayloadAction<Character>) => {
-      const index = state.chosenCharacters.findIndex(
-        (character) => character.id === action.payload.id
-      );
+
+    toggleFilter: (state, action: PayloadAction<string>) => {
+      toggleInArray(state.filters, action.payload);
+    },
+    setFilters: (state, action: PayloadAction<string[]>) => {
+      state.filters = action.payload.slice();
+    },
+    clearFilters: (state) => {
+      state.filters = [];
+    },
+
+    toggleChosenCharacter: (state, action: PayloadAction<number>) => {
+      const id = action.payload;
+      const index = state.chosenCharacters.indexOf(id);
 
       if (index !== -1) {
         state.chosenCharacters.splice(index, 1);
-      } else if (state.chosenCharacters.length < 6) {
-        state.chosenCharacters.push(action.payload);
+      } else if (state.chosenCharacters.length < MAX_CHOSEN) {
+        state.chosenCharacters.push(id);
       }
+    },
+    clearChosen: (state) => {
+      state.chosenCharacters = [];
     },
   },
 });
 
 export const {
+  setData,
   setQuery,
   clearQuery,
-  clearFilters,
   toggleFilter,
-  setData,
+  setFilters,
+  clearFilters,
   toggleChosenCharacter,
+  clearChosen,
 } = characters.actions;
+
 export default characters.reducer;

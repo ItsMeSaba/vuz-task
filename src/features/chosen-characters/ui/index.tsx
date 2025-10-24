@@ -25,7 +25,7 @@ export function ChosenCharacters() {
           <CharacterAvatar
             key={character.id}
             character={character}
-            onRemove={() => dispatch(toggleChosenCharacter(character))}
+            onRemove={() => dispatch(toggleChosenCharacter(character.id))}
           />
         ))}
       </div>

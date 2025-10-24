@@ -1,0 +1,104 @@
+.container {
+  width: 100%;
+  padding: 24px;
+  max-width: 1080px;
+  margin: auto;
+
+  @media (max-width: 1080px) {
+    padding: 8px;
+  }
+}
+
+.tableWrapper {
+  width: 100%;
+  max-width: 95vw;
+  overflow-x: auto;
+  border-radius: 0.5rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  tbody {
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .tableHeader {
+    th {
+      text-align: left;
+      padding: 10px 13px;
+      font-weight: 700;
+      font-size: 20px;
+      color: #111827;
+    }
+  }
+
+  .tableRow {
+    border-bottom: 1px solid #f3f4f6;
+    transition: background-color 0.15s ease-in-out;
+
+    &:hover {
+      background-color: #f9fafb;
+    }
+
+    &.selected {
+      background-color: rgba(237, 245, 255, 1);
+    }
+
+    td {
+      height: 92px;
+
+      &:first-child {
+        padding: 0 0 0 22px;
+      }
+
+      &:last-child {
+        padding: 0 22px 0 0;
+      }
+    }
+  }
+}
+
+.characterCell {
+  .characterContent {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 1000px;
+    object-fit: cover;
+  }
+
+  .characterName {
+    font-weight: 500;
+    font-size: 20px;
+    color: #111827;
+  }
+}
+
+.tagsCell {
+  .tagsContainer {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+}
+
+.scoreCell {
+  text-align: center;
+  color: #111827;
+  font-size: 24px;
+
+  &.highScore {
+    color: #dc2626;
+    font-weight: 600;
+  }
+}

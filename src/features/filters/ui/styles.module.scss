@@ -1,0 +1,16 @@
+.filters {
+  max-width: 95%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  .clearAll {
+    color: rgba(153, 153, 153, 1);
+    font-size: 20px;
+    text-decoration: underline;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+  }
+}

@@ -52,12 +52,19 @@ function matchesFilters(
 ) {
   if (!filters.length) return true;
 
-  const matchesTeamFilter =
-    filters.includes(MY_TEAM_FILTER) && chosenCharacters.includes(character.id);
-
-  const matchesTagsFilter = filters.every((filter) =>
-    character?.tags?.some((tag) => filter === tag.tag_name)
+  const filtersWithoutMyTeam = filters.filter(
+    (filter) => filter !== MY_TEAM_FILTER
   );
 
-  return matchesTagsFilter || matchesTeamFilter;
+  const matchesTeamFilter =
+    !filters.includes(MY_TEAM_FILTER) ||
+    chosenCharacters.includes(character.id);
+
+  const matchesTagsFilter =
+    filtersWithoutMyTeam.length === 0 ||
+    filtersWithoutMyTeam.every((filter) =>
+      character?.tags?.some((tag) => filter === tag.tag_name)
+    );
+
+  return matchesTagsFilter && matchesTeamFilter;
 }

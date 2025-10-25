@@ -6,8 +6,9 @@ import React from "react";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 
+import "./app/styles/index.scss";
+import "./app/styles/fonts.scss";
 import "normalize.css";
-import "./app/styles/index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as Element);
 

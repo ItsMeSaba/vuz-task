@@ -3,10 +3,9 @@ import type { Character } from "@/shared/types/global";
 import { createSelector } from "@reduxjs/toolkit";
 import type { RootState } from "@/app/store";
 
-export const selectQuery = (s: RootState) =>
-  s.characters.query.trim().toLowerCase();
+export const selectQuery      = (s: RootState) => s.characters.query.trim().toLowerCase();
 export const selectCharacters = (s: RootState) => s.characters.data;
-export const selectFilters = (s: RootState) => s.characters.filters;
+export const selectFilters    = (s: RootState) => s.characters.filters;
 
 export const selectChosenCharacters = (s: RootState) => {
   const characters = s.characters.data;
